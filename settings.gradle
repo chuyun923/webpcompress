@@ -1,1 +1,1 @@
-include ':exm', ':plugin'
+include ':exm', ':webpcompress'

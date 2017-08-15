@@ -1,4 +1,4 @@
-package com.maoyan.android.gradle.plugin
+package com.chuyun.android.plugin
 
 import com.android.build.gradle.api.BaseVariant
 import org.gradle.api.DomainObjectCollection

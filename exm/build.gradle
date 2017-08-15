@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'webpcompress'
 
 android {
     compileSdkVersion 25
@@ -20,11 +21,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
-    testCompile 'junit:junit:4.12'
+}
+
+webpCompress {
+    q = 80  //压缩比例 0～100，100是无损压缩，默认80
+    skipDebug = false //debug下是否开启webp压缩 默认不开启
+    cwebpPath = "/Users/pengliang/Downloads/libwebp-0.6.0-rc3-mac-10.12/bin/cwebp" //cwebp命令的路径
+    openLog = true //是否打开log
+    filterAlpha = false //是否过滤有透明通道的图片
 }

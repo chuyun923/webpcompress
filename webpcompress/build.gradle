@@ -1,11 +1,12 @@
-apply plugin: 'groovy'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'groovy'
+
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'com.android.tools.build:gradle:2.2.0'
+    compile 'com.android.tools.build:gradle:2.3.0'
 }
 
 
@@ -13,9 +14,11 @@ artifacts {  // artifact to be uploaded
     archives jar
 }
 
-def siteUrl = 'http://baidu.com'      // 项目的主页
-def gitUrl = 'http://baidu.com'   // Git仓库的url
-group = "com.chuyun.android.plugin" // Maven Group ID for the artifact，一般填你唯一的包名
+def siteUrl = 'https://github.com/chuyun923/webpcompress'      // 项目的主页
+def gitUrl = 'https://github.com/chuyun923/webpcompress.git'   // Git仓库的url
+group = "com.chuyun923.android.plugin" // Maven Group ID for the artifact，一般填你唯一的包名
+version = '3.0.0'
+
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -34,9 +37,9 @@ install {
                 }
                 developers {
                     developer {
-                        id ''       //填写开发者基本信息
-                        name 'chuyun'
-                        email ''
+                        id 'chuyun923'       //填写开发者基本信息
+                        name 'chuyun923'
+                        email 'chuyun923@gmail.com'
                     }
                 }
                 scm {
@@ -48,22 +51,7 @@ install {
         }
     }
 }
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
