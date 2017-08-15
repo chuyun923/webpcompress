@@ -25,7 +25,7 @@ webp相对于png 和 jpg来说，拥有更高的压缩比，并且提供有损�
            //配置压缩白名单
        }
 
-> * cwebp命令下载地址：https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html，jenkins上面我已经配置好：路径固定为：/data/tools/webp/bin/cwebp
+> * cwebp命令下载地址：https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html
 * filterAplph:默认情况下，需要打开，如果你的minSDK升级到了18，那么可以关闭，原因是在Android 4.2.1及以下版本上面对于有透明度的
 webp图片显示有问题
 
