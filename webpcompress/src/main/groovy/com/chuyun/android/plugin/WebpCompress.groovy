@@ -43,38 +43,7 @@ public class WebpCompress implements Plugin<Project> {
                     Set<String> whiteList = getWhiteList(project, mExtension);
 
                     dx.inputs.files.files.each { file ->
-                        if (!isCompressAblePicture(file)) return
-
-                        String name = file.name;
-
-                        if (whiteList.contains(name)) {
-                            log "${name} is skiped because of whitelist!"
-                            return
-                        }
-
-                        if (mExtension.filterAlpha && hasAlpha(file)) {
-                            log "${name} is skiped because of has ALPHA!"
-                            return
-                        }
-
-                        String absolutePath = file.absolutePath;
-                        String picName = name.split('\\.')[0]
-                        String dirName = absolutePath.substring(0, absolutePath.lastIndexOf(separator))
-
-                        executeSync "${mExtension.cwebpPath} -q ${mExtension.q} -m 6 ${absolutePath} -o ${dirName}/${picName}.webp"
-                        File webpFile = new File("${dirName}/${picName}.webp");
-                        if(file.size() <= webpFile.size()) {
-                            log "${absolutePath} png is smaller than webp!"
-                            executeSync "rm ${dirName}/${picName}.webp"
-                            return
-                        }else {
-                            executeSync "rm ${absolutePath}"
-                        }
-
-                        def picWriter = new FileWriter(outputfile, true);
-                        picWriter.write("${absolutePath}-->${picName}.webp\n");
-                        picWriter.flush()
-                        picWriter.close()
+                        compress(file,outputfile,whiteList)
                     }
                 }
 
@@ -83,6 +52,54 @@ public class WebpCompress implements Plugin<Project> {
             }
 
         }
+    }
+
+    private void compress(File file,File outputfile,Set<String> whiteList) {
+
+        if(file.isDirectory()) {
+
+            File[] files = file.listFiles()
+            if(files == null || files.length <= 0) return
+
+            for(File file1 : files) {
+                compress(file1,outputfile,whiteList)
+            }
+            return
+        }
+
+
+        if (!isCompressAblePicture(file)) return
+
+        String name = file.name;
+
+        if (whiteList.contains(name)) {
+            log "${name} is skiped because of whitelist!"
+            return
+        }
+
+        if (mExtension.filterAlpha && hasAlpha(file)) {
+            log "${name} is skiped because of has ALPHA!"
+            return
+        }
+
+        String absolutePath = file.absolutePath;
+        String picName = name.split('\\.')[0]
+        String dirName = absolutePath.substring(0, absolutePath.lastIndexOf(separator))
+
+        executeSync "${mExtension.cwebpPath} -q ${mExtension.q} -m 6 ${absolutePath} -o ${dirName}/${picName}.webp"
+        File webpFile = new File("${dirName}/${picName}.webp");
+        if(file.size() <= webpFile.size()) {
+            log "${absolutePath} png is smaller than webp!"
+            executeSync "rm ${dirName}/${picName}.webp"
+            return
+        }else {
+            executeSync "rm ${absolutePath}"
+        }
+
+        def picWriter = new FileWriter(outputfile, true);
+        picWriter.write("${absolutePath}-->${picName}.webp\n");
+        picWriter.flush()
+        picWriter.close()
     }
 
     private void log(String s) {
