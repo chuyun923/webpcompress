@@ -90,10 +90,10 @@ public class WebpCompress implements Plugin<Project> {
         File webpFile = new File("${dirName}/${picName}.webp");
         if(file.size() <= webpFile.size()) {
             log "${absolutePath} png is smaller than webp!"
-            executeSync "rm ${dirName}/${picName}.webp"
+            webpFile.delete();
             return
         }else {
-            executeSync "rm ${absolutePath}"
+            file.delete();
         }
 
         def picWriter = new FileWriter(outputfile, true);

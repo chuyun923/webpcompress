@@ -17,7 +17,7 @@ artifacts {  // artifact to be uploaded
 def siteUrl = 'https://github.com/chuyun923/webpcompress'      // 项目的主页
 def gitUrl = 'https://github.com/chuyun923/webpcompress.git'   // Git仓库的url
 group = "com.chuyun923.android.plugin" // Maven Group ID for the artifact，一般填你唯一的包名
-version = '3.1.0'
+version = '3.2.0'
 
 install {
     repositories.mavenInstaller {

@@ -5,7 +5,7 @@ webp相对于png 和 jpg来说，拥有更高的压缩比，并且提供有损�
 
 ###引入
 
-       classpath 'com.chuyun923.android.plugin:webpcompress:3.0.0'
+       classpath 'com.chuyun923.android.plugin:webpcompress:3.2.0'
 
 
        apply plugin: 'webpcompress'
